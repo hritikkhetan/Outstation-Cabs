@@ -2,11 +2,15 @@ const express = require('express')
 const router = express.Router()
 const Booking = require('../models/booking')
 
-
 router.get('/', async(req, res) => {
     try{
         const bookings = await Booking.find()
-        res.json(bookings)
+        res.json({
+            "data": bookings,
+            "message": "All booking details",
+            "status": true,
+            "code": 200
+        })
     }catch(err){
         res.send('Error ' + err)
     }
@@ -31,7 +35,12 @@ router.post('/', async(req, res) => {
     })
     try{
         const b1 =  await booking.save()
-        res.json(b1)
+        res.json({
+            "data": b1,
+            "message": "Booking detail saved",
+            "status": true,
+            "code": 200
+        })
     }catch(err){
         res.send(err)
     }
