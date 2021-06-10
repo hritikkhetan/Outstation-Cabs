@@ -6,7 +6,12 @@ const Car = require('../models/car')
 router.get('/', async(req, res) => {
     try{
         const cars = await Car.find()
-        res.json(cars)
+        res.json({
+            "data": cars,
+            "message": "Search Results",
+            "status": true,
+            "code": 200
+        })
     }catch(err){
         res.send('Error ' + err)
     }
@@ -22,7 +27,7 @@ router.get('/:pick_loc/:drop_loc/:pick_dateTime/:people/:car_type', async(req, r
         const cars = await Car.find({$and:[{'pick_loc': pick_loc}, {'drop_loc': drop_loc}, {'pick_dateTime': pick_dateTime}, {"max_seat":{$gte:people}}, {'car_type': car_type}]})
         res.json({
             "data": cars,
-            "message": "Search Results",
+            "message": "Search Results based on User Request",
             "status": true,
             "code": 200
         })
@@ -34,7 +39,12 @@ router.get('/:pick_loc/:drop_loc/:pick_dateTime/:people/:car_type', async(req, r
 router.get('/:id', async(req, res) => {
     try{
         const car = await Car.findById(req.params.id)
-        res.json(car)
+        res.json({
+            "data": car,
+            "message": "Search Result by ID",
+            "status": true,
+            "code": 200
+        })
     }catch(err){
         res.send('Error ' + err)
     }
@@ -56,7 +66,12 @@ router.post('/', async(req,res) => {
     })
     try{
         const c1 =  await car.save() 
-        res.json(c1)
+        res.json({
+            "data": c1,
+            "message": "Car Saved",
+            "status": true,
+            "code": 200
+        })
     }catch(err){
         res.send(err)
     }
