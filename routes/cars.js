@@ -20,7 +20,12 @@ router.get('/:pick_loc/:drop_loc/:pick_dateTime/:people/:car_type', async(req, r
     const car_type = req.params.car_type
     try{
         const cars = await Car.find({$and:[{'pick_loc': pick_loc}, {'drop_loc': drop_loc}, {'pick_dateTime': pick_dateTime}, {"max_seat":{$gte:people}}, {'car_type': car_type}]})
-        res.json(cars)
+        res.json({
+            "data": cars,
+            "message": "Search Results",
+            "status": true,
+            "code": 200
+        })
     }catch(err){
         res.send('Error ' + err)
     }
